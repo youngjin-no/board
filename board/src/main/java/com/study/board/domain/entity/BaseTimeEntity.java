@@ -1,4 +1,4 @@
-package com.study.board.example.entity;
+package com.study.board.domain.entity;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -12,7 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 @Getter
-public class BaseTimeEntity {
+abstract class BaseTimeEntity {
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdDate;

@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *  Controller 구현하기
- *  TODO : list, read, create, delete, update
+ *  TODO : list, read, create, delete, update 서비스 구현
+ *
  */
 
 @RestController
