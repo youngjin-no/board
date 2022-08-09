@@ -1,6 +1,9 @@
 package com.study.board;
 
+import java.util.Random;
+
 import com.study.board.domain.entity.Board;
+import com.study.board.util.SHA512;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -35,7 +38,7 @@ public class InitData {
 			for (int i = 0; i < 100; i++) {
 				Board board = Board.builder().subject("example" + i).contents("test contents")
 					.writer(writers[i % 5]).isDelete(false)
-					.password("").build();
+					.password(SHA512.decryption("")).build();
 				em.persist(board);
 			}
 		}
