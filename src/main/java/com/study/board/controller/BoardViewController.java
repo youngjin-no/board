@@ -1,6 +1,7 @@
 package com.study.board.controller;
 
 import com.study.board.domain.entity.Board;
+import com.study.board.domain.model.BoardDTO;
 import com.study.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -56,7 +57,7 @@ public class BoardViewController {
         return "editForm";
     }
     @PostMapping("/edit/{id}")
-    public  String edit(@PathVariable("id") Long id,@ModelAttribute Board board) {
+    public  String edit(@PathVariable("id") Long id,@ModelAttribute BoardDTO board) {
         System.out.println(board.getSubject());
         board.setId(id);
         boardService.register(board);

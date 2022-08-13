@@ -2,44 +2,52 @@ package com.study.board.service;
 
 import com.study.board.domain.entity.Board;
 import com.study.board.domain.entity.repository.BoardRepository;
+import com.study.board.domain.model.BoardDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
 
     @Override
-    public boolean register(Board board) {
+    public boolean register(BoardDTO boardDTO) {
+        Board board=boardDTO.toEntity(boardDTO);
         try {
             boardRepository.save(board);
-        }catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
         return true;
     }
 
     @Override
-    public List<Board> boardList() {
-        return boardRepository.findAll();
+    public List<BoardDTO> boardList() {
+
+        List<Board> boards =boardRepository.findAll();
+        return boards.stream().map(board -> new BoardDTO(board)).collect(Collectors.toList());
     }
 
     @Override
-    public Optional<Board> detail(Long id) {
-        return boardRepository.findById(id);
+    public BoardDTO detail(Long id) {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException());
 
+        BoardDTO dto = new BoardDTO(board);
 
+        return dto;
     }
 
     @Override
     public boolean delete(Long id) {
         try {
             boardRepository.deleteById(id);
-        }catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
         return true;
