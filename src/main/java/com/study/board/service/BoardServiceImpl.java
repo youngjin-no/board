@@ -27,6 +27,19 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public boolean update(BoardDTO boardDTO) {
+        Board board=boardDTO.toEntity(boardDTO);
+        Board registeredBaord=boardRepository.findById(board.getId()).orElseThrow(() -> new NoSuchElementException());
+
+        if(board.getPassword().equals(registeredBaord.getPassword())) {
+            boardRepository.save(board);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     public List<BoardDTO> boardList() {
 
         List<Board> boards =boardRepository.findAll();

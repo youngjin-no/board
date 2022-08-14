@@ -11,7 +11,7 @@ import java.util.UUID;
 public interface BoardService {
 
     boolean register(BoardDTO boardDTO);
-
+    boolean update(BoardDTO boardDTO);
     List<BoardDTO> boardList();
     BoardDTO detail(Long id);
     boolean delete(Long id);

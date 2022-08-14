@@ -2,8 +2,10 @@ package com.study.board.domain.model;
 
 import com.study.board.domain.entity.Board;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -23,20 +25,27 @@ public class BoardDTO {
     @Column(name = "DELETE_YN",length = 1)
     private boolean isDelete = false;
     private String password;
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdDate;
 
     public BoardDTO(Board board) {
         this.id = board.getId();
         this.subject = board.getSubject();
         this.contents = board.getContents();
         this.writer = board.getWriter();
+//        this.password=board.getPassword();
         this.isDelete = board.isDelete();
+        this.createdDate=board.getCreatedDate();
     }
 
         public Board toEntity(BoardDTO board) {
         return Board.builder()
+                .id(id)
                 .subject(subject)
                 .contents(contents)
                 .writer(writer)
+                .password(password)
                 .isDelete(isDelete)
                 .build();
     }

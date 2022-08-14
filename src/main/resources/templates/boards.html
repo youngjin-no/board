@@ -49,6 +49,34 @@
     </div>
 
 </div> <!-- /container -->
+<nav style="text-align: center" th:with="start=${(boards.number/maxPage)*maxPage + 1},
+                  end=(${(boards.totalPages == 0) ? 1 : (start + (maxPage - 1) < boards.totalPages ? start + (maxPage - 1) : boards.totalPages)})" >
 
+        <ul>
+            <li th:if="${start > 1}">
+                <a th:href="@{/list?(page=0)}" th:text="'<<'"></a></li>
+            </li>
+
+            <li th:if="${start > 1}">
+                <a th:href="@{/list?(page=${start - maxPage})}" th:text="'<'"></a>
+            </li>
+
+
+            <li th:each="page: ${#numbers.sequence(start, end)}">
+                <a th:href="@{/list?(page=${page-1})}" th:text="${page}"></a></li>
+            </li>
+
+            <li th:if="${end < boards.totalPages}">
+                <a th:href="@{/list?(page=${start + maxPage})}" th:text="'>'"></a>
+            </li>
+
+            <li th:if="${end < boards.totalPages}">
+                <a th:href="@{/list?(page=${boards.totalPages-1})}" th:text="'>>'"></a></li>
+            </li>
+        </ul>
+
+
+    </ul>
+</nav>
 </body>
 </html>
