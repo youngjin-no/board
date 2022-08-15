@@ -50,14 +50,14 @@ public class BoardViewController {
         return "editForm";
     }
     @PostMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, @ModelAttribute BoardDTO board, Model model) {
+    public String edit(@PathVariable("id") Long id, @ModelAttribute BoardDTO board, Model model,RedirectAttributes redirectAttributes) {
         board.setId(id);
         try {
            boolean result= boardService.update(board);
 
            if(!result) {
-               model.addAttribute("passwordError",true);
-               return "editForm";
+               redirectAttributes.addFlashAttribute("passwordError",true);
+               return "redirect:/board/edit/{id}";
            }
 
         }catch(NoSuchElementException e) {

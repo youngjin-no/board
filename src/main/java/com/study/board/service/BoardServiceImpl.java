@@ -29,9 +29,9 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public boolean update(BoardDTO boardDTO) {
         Board board=boardDTO.toEntity(boardDTO);
-        Board registeredBaord=boardRepository.findById(board.getId()).orElseThrow(() -> new NoSuchElementException());
+        Board registeredBoard=boardRepository.findById(board.getId()).orElseThrow(() -> new NoSuchElementException());
 
-        if(board.getPassword().equals(registeredBaord.getPassword())) {
+        if(board.getPassword().equals(registeredBoard.getPassword())) {
             boardRepository.save(board);
             return true;
         } else {
@@ -45,7 +45,9 @@ public class BoardServiceImpl implements BoardService {
         List<Board> boards =boardRepository.findAll();
         return boards.stream().map(board -> new BoardDTO(board)).collect(Collectors.toList());
     }
-
+    public Long count() {
+        return boardRepository.count();
+    }
     @Override
     public BoardDTO detail(Long id) {
         Board board = boardRepository.findById(id)
