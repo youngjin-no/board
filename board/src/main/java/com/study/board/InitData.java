@@ -36,9 +36,13 @@ public class InitData {
 		public void init() {
 			String[] writers = new String[] {"김영진", "이병희", "김준엽", "홍의표", "노영진"};
 			for (int i = 0; i < 100; i++) {
-				Board board = Board.builder().subject("example" + i).contents("test contents")
-					.writer(writers[i % 5]).isDelete(false)
-					.password(SHA512.decryption("")).build();
+				Board board = Board.builder()
+					.subject("example" + i)
+					.contents("test contents")
+					.writer(writers[i % 5])
+					.isDelete(false)
+					.password(SHA512.decryption(""))
+					.build();
 				em.persist(board);
 			}
 		}
