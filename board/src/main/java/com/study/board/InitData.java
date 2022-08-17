@@ -1,8 +1,6 @@
 package com.study.board;
 
-import java.util.Random;
-
-import com.study.board.domain.entity.Board;
+import com.study.board.domain.board.entity.Board;
 import com.study.board.util.SHA512;
 
 import javax.annotation.PostConstruct;

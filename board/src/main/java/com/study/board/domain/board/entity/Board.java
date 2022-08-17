@@ -1,4 +1,4 @@
-package com.study.board.domain.entity;
+package com.study.board.domain.board.entity;
 
 import java.util.UUID;
 
