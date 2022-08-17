@@ -1,4 +1,4 @@
-package com.study.board.domain.entity;
+package com.study.board.domain.board.entity;
 
 import java.util.UUID;
 
@@ -25,10 +25,7 @@ import org.hibernate.annotations.Type;
 @Builder
 public class Board extends BaseTimeEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
-	@GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-	@Type(type = "uuid-char")
-	@Column(name = "BOARD_ID", length = 36)
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto created ID
 	private UUID id;
 	private String subject;
 	@Lob
