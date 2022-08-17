@@ -17,5 +17,7 @@ public interface BoardService {
     BoardDTO detail(Long id);
     boolean delete(Long id);
 
+    boolean deleteAll();
+
 }
 

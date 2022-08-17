@@ -68,4 +68,14 @@ public class BoardServiceImpl implements BoardService {
         return true;
 
     }
+
+    @Override
+    public boolean deleteAll() {
+        try {
+            boardRepository.deleteAll();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
