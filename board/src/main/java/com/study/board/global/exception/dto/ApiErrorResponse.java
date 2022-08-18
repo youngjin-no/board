@@ -1,4 +1,4 @@
-package com.study.board.util.exception.dto;
+package com.study.board.global.exception.dto;
 
 public class ApiErrorResponse {
 	private String message;

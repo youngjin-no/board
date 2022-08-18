@@ -5,11 +5,9 @@ import static org.mockito.BDDMockito.*;
 
 import java.util.Optional;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -19,10 +17,8 @@ import com.study.board.domain.board.model.BoardDto;
 import com.study.board.domain.board.model.BoardDtoAssembler;
 import com.study.board.domain.board.repository.BoardRepository;
 import com.study.board.domain.board.service.BoardService;
-import com.study.board.util.SHA512;
-import com.study.board.util.exception.board.BoardException;
-
-import lombok.extern.slf4j.Slf4j;
+import com.study.board.global.util.SHA512;
+import com.study.board.global.exception.board.BoardException;
 
 @ExtendWith(MockitoExtension.class)
 public class BoardServiceTest {

@@ -1,4 +1,4 @@
-package com.study.board.util.exception;
+package com.study.board.global.exception;
 
 import org.springframework.http.HttpStatus;
 

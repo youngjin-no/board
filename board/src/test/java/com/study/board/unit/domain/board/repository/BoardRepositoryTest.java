@@ -1,7 +1,6 @@
 package com.study.board.unit.domain.board.repository;
 
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import com.study.board.domain.board.entity.Board;
 import com.study.board.domain.board.repository.BoardRepository;
-import com.study.board.util.SHA512;
+import com.study.board.global.util.SHA512;
 
 @DataJpaTest
 public class BoardRepositoryTest {

@@ -9,8 +9,8 @@ import com.study.board.domain.board.model.BoardDto;
 import com.study.board.domain.board.entity.Board;
 import com.study.board.domain.board.model.BoardDtoAssembler;
 import com.study.board.domain.board.repository.BoardRepository;
-import com.study.board.util.exception.board.BoardException;
-import com.study.board.util.exception.ErrorCode;
+import com.study.board.global.exception.board.BoardException;
+import com.study.board.global.exception.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

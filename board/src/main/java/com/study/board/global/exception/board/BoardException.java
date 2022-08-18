@@ -1,8 +1,8 @@
-package com.study.board.util.exception.board;
+package com.study.board.global.exception.board;
 
 import org.springframework.http.HttpStatus;
 
-import com.study.board.util.exception.ErrorCode;
+import com.study.board.global.exception.ErrorCode;
 
 public class BoardException extends RuntimeException {
 	private ErrorCode errorCode;
