@@ -26,7 +26,7 @@ import org.hibernate.annotations.Type;
 public class Board extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto created ID
-	private int id;
+	private Long id;
 	private String subject;
 	@Lob
 	private String contents;
