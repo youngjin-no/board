@@ -39,7 +39,7 @@ public class BoardDTO {
         this.createdDate=board.getCreatedDate();
     }
 
-        public Board toEntity(BoardDTO board) {
+    public Board toEntity(BoardDTO board) {
         return Board.builder()
                 .id(id)
                 .subject(subject)
