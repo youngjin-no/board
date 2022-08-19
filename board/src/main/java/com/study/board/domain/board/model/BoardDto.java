@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import javax.validation.constraints.Max;
 
+import com.querydsl.core.annotations.QueryProjection;
 import com.study.board.domain.board.entity.Board;
 
 import lombok.Builder;
