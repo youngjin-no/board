@@ -2,6 +2,7 @@ package com.study.board.global.exception;
 
 import static java.util.Objects.*;
 
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -32,6 +33,7 @@ public class GlobalExceptionHandler {
 			.getDefaultMessage();
 		ApiErrorResponse exceptionResponse = new ApiErrorResponse(errorCode);
 		log.warn(LOG_FORMAT, e.getClass().getSimpleName(), errorCode, "@Valid");
+		log.warn("StackTrace : {}", e.getStackTrace());
 		return ResponseEntity
 			.status(HttpStatus.BAD_REQUEST.value())
 			.body(exceptionResponse);
@@ -45,6 +47,7 @@ public class GlobalExceptionHandler {
 			e.getErrorCode(),
 			e.getMessage()
 		);
+		log.warn("StackTrace : {}", e.getStackTrace());
 		return ResponseEntity
 			.status(e.getHttpStatus())
 			.body(new ApiErrorResponse(e.getMessage()));

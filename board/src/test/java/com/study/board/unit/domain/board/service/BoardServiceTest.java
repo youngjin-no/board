@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.study.board.domain.board.entity.Board;
 import com.study.board.domain.board.model.BoardDto;
 import com.study.board.domain.board.model.BoardDtoAssembler;
+import com.study.board.domain.board.model.BoardSaveDto;
 import com.study.board.domain.board.repository.BoardRepository;
 import com.study.board.domain.board.service.BoardService;
 import com.study.board.global.util.SHA512;
@@ -40,7 +41,7 @@ public class BoardServiceTest {
 	@Test
 	void saveBoard_Success() {
 		Board board = getBoard();
-		BoardDto boardDto = BoardDtoAssembler.toBoardDto(board);
+		BoardSaveDto boardDto = BoardDtoAssembler.toBoardSaveDto(board);
 
 		given(boardRepository.save(any(Board.class)))
 			.willReturn(board);

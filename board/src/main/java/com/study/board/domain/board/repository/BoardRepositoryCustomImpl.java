@@ -10,14 +10,11 @@ import javax.persistence.EntityManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
-import org.springframework.util.StringUtils;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.study.board.domain.board.entity.Board;
-import com.study.board.domain.board.entity.QBoard;
-import com.study.board.domain.board.model.BoardDto;
 import com.study.board.domain.board.model.BoardDtoForPage;
 import com.study.board.domain.board.model.BoardSearchCond;
 import com.study.board.domain.board.model.QBoardDtoForPage;
