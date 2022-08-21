@@ -27,4 +27,9 @@ public class Board extends BaseTimeEntity{
     @Column(name = "DELETE_YN",length = 1)
     private boolean isDelete = false;
     private String password;
+
+
+    public void deleteBoard() {
+        isDelete =true;
+    }
 }

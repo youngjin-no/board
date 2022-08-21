@@ -1,20 +1,23 @@
-package com.study.board.BoardService;
+package com.study.board.integration;
 
 import com.study.board.domain.entity.Board;
 import com.study.board.domain.entity.repository.BoardRepository;
 import com.study.board.domain.model.BoardDTO;
 import com.study.board.service.BoardService;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class BoardServiceTest {
+public class IntegrationBoardServiceTest {
     @Autowired
     BoardRepository boardRepository;
 
@@ -23,6 +26,7 @@ public class BoardServiceTest {
     @Autowired
     private BoardService boardService;
 
+    @DisplayName("게시판 생성")
     @Test
     @Transactional
     public void boardDetail() {
@@ -36,7 +40,7 @@ public class BoardServiceTest {
         //then
         assertThat(boardDTO.getSubject()).isEqualTo(board.getSubject());
     }
-
+    @DisplayName("게시판 리스트 조회")
     @Test
     @Transactional
     public void boardList() {
@@ -47,7 +51,7 @@ public class BoardServiceTest {
             Board board = Board.builder().subject("example" + i).contents("test contents")
                     .writer(writers[i % a])
                     .password("").build();
-        //when
+            //when
             em.persist(board);
             boardRepository.save(board);
         }
@@ -56,6 +60,7 @@ public class BoardServiceTest {
         assertThat(boards.size()).isEqualTo(a);
 
     }
+    @DisplayName("게시판 수정")
     @Test
     @Transactional
     public void boardUpdate() {
@@ -72,7 +77,7 @@ public class BoardServiceTest {
         assertThat(board.getContents()).isEqualTo("updated");
 
     }
-//
+    @DisplayName("게시판 삭제")
     @Test
     @Transactional
     public void boardDelete() {
@@ -90,6 +95,7 @@ public class BoardServiceTest {
         assertThat(boardDTOS.size()).isEqualTo(1);
 
     }
+    @DisplayName("게시판 수정 시 비밀번호 불일치")
     @Test
     @Transactional
     public void updatePasswordFailTest() {
@@ -106,6 +112,7 @@ public class BoardServiceTest {
         assertThat(isUpdated).isFalse();
 
     }
+    @DisplayName("게시판 수정 시 비밀번호 일치")
     @Test
     @Transactional
     public void updatePasswordSuccessTest() {
@@ -121,5 +128,4 @@ public class BoardServiceTest {
         //then
         assertThat(isUpdated).isTrue();
     }
-
 }

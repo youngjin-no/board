@@ -31,7 +31,7 @@ public class BoardController {
         return ResponseEntity.ok().body(boardService.boardList());
     }
     @PostMapping("/register")
-    public ResponseEntity<Boolean> createBoard(@RequestBody Board board) {
+    public ResponseEntity<BoardDTO> createBoard(@RequestBody Board board) {
         BoardDTO boardDTO=new BoardDTO(board);
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/register").toUriString());
         return ResponseEntity.created(uri).body(boardService.register(boardDTO));

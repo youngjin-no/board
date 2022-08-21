@@ -16,14 +16,10 @@ public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
 
     @Override
-    public boolean register(BoardDTO boardDTO) {
-        Board board=boardDTO.toEntity(boardDTO);
-        try {
-            boardRepository.save(board);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
+    public BoardDTO register(BoardDTO boardDTO) {
+        Board board=boardRepository.save(boardDTO.toEntity(boardDTO));
+        return new BoardDTO(board);
+
     }
 
     @Override
