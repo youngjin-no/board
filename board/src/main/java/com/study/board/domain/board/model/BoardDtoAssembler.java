@@ -21,6 +21,7 @@ public class BoardDtoAssembler {
 			.subject(board.getSubject())
 			.contents(board.getContents())
 			.writer(board.getWriter())
+			.password(board.getPassword())
 			.build();
 	}
 
@@ -38,6 +39,7 @@ public class BoardDtoAssembler {
 			.subject(boardSaveDto.getSubject())
 			.contents(boardSaveDto.getContents())
 			.writer(boardSaveDto.getWriter())
+			.password(boardSaveDto.getPassword())
 			.build();
 	}
 }

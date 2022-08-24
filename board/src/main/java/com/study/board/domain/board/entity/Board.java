@@ -10,6 +10,7 @@ import javax.persistence.Lob;
 import org.springframework.util.StringUtils;
 
 import com.study.board.domain.board.model.BoardDto;
+import com.study.board.global.util.SHA512;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -44,6 +45,9 @@ public class Board extends BaseTimeEntity {
 			subject = boardDto.getWriter();
 	}
 
+	public void encryptPassword() {
+		password = SHA512.decryption(password);
+	}
 	public void changePassword(String password) {
 		this.password = password;
 	}

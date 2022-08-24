@@ -18,16 +18,19 @@ import com.study.board.global.exception.ErrorCode;
 import com.study.board.global.exception.board.BoardException;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class BoardService {
 	private final BoardRepository boardRepository;
 
 	@Transactional
 	public BoardDto saveBoard(BoardSaveDto boardDto) {
 		Board saved = boardRepository.save(BoardDtoAssembler.boardFromSaveDto(boardDto));
+		saved.encryptPassword();
 		return BoardDtoAssembler.toBoardDto(saved);
 	}
 
