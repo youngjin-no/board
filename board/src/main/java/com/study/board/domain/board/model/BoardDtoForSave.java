@@ -1,12 +1,8 @@
 package com.study.board.domain.board.model;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.Range;
-
-import com.study.board.global.util.SHA512;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +11,7 @@ import lombok.ToString;
 @Builder
 @Getter
 @ToString
-public class BoardSaveDto {
+public class BoardDtoForSave {
 	@NotBlank(message = "{notblank.subject}")
 	private String subject;
 	@NotBlank(message = "{notblank.contents}")
