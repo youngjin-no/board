@@ -30,9 +30,10 @@ public class BoardService {
 
 	@Transactional
 	public BoardDto saveBoard(BoardDtoForSave boardDto) {
-		Board saved = boardRepository.save(BoardDtoAssembler.boardFromSaveDto(boardDto));
-		saved.encryptPassword();
-		return BoardDtoAssembler.toBoardDto(saved);
+		Board board = BoardDtoAssembler.boardFromSaveDto(boardDto);
+		board.encryptPassword();
+		boardRepository.save(board);
+		return BoardDtoAssembler.toBoardDto(board);
 	}
 
 	public BoardDto getBoardDetail(Long boardId) {
