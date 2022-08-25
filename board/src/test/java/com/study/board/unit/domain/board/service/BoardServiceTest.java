@@ -21,7 +21,10 @@ import com.study.board.domain.board.service.BoardService;
 import com.study.board.global.util.SHA512;
 import com.study.board.global.exception.board.BoardException;
 
+import lombok.extern.slf4j.Slf4j;
+
 @ExtendWith(MockitoExtension.class)
+@Slf4j
 public class BoardServiceTest {
 
 	@InjectMocks
@@ -47,7 +50,7 @@ public class BoardServiceTest {
 			.willReturn(board);
 
 		BoardDto savedBoardDto = boardService.saveBoard(boardDto);
-
+		log.info("savedBoardDto={}", savedBoardDto);
 		assertThat(savedBoardDto.getId()).isNotNull();
 		verify(boardRepository, times(1))
 			.save(any(Board.class));

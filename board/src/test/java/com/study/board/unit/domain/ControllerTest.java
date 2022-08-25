@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.study.board.domain.board.controller.BoardController;
 import com.study.board.domain.board.service.BoardService;
+import com.study.board.global.aop.logtrace.LogTraceAspect;
 
 @WebMvcTest({BoardController.class})
 @ActiveProfiles("test")
@@ -22,4 +23,7 @@ public class ControllerTest {
 
 	@MockBean
 	protected BoardService boardService;
+
+	@MockBean
+	protected LogTraceAspect logTraceAspect;
 }

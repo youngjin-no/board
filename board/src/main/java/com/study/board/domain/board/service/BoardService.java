@@ -32,8 +32,8 @@ public class BoardService {
 	public BoardDto saveBoard(BoardDtoForSave boardDto) {
 		Board board = BoardDtoAssembler.boardFromSaveDto(boardDto);
 		board.encryptPassword();
-		boardRepository.save(board);
-		return BoardDtoAssembler.toBoardDto(board);
+		Board save = boardRepository.save(board);
+		return BoardDtoAssembler.toBoardDto(save);
 	}
 
 	public BoardDto getBoardDetail(Long boardId) {
