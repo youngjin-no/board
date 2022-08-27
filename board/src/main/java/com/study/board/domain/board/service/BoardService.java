@@ -48,6 +48,7 @@ public class BoardService {
 		BoardDto boardDto = BoardDtoAssembler.toBoardDto(board);
 		return boardDto;
 	}
+
 	@Transactional
 	public boolean deleteBoard(Long boardId) {
 		Board board = getBoard(boardId);

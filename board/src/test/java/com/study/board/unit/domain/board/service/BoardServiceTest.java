@@ -30,18 +30,13 @@ import com.study.board.domain.board.model.BoardSearchCond;
 import com.study.board.domain.board.repository.BoardRepository;
 import com.study.board.domain.board.service.BoardService;
 import com.study.board.global.exception.board.BoardException;
-import com.study.board.global.util.SHA512;
+import com.study.board.unit.domain.board.BoardConstantForTest;
 
 import lombok.extern.slf4j.Slf4j;
 
 @ExtendWith(MockitoExtension.class)
 @Slf4j
-public class BoardServiceTest {
-
-	public static final String SUBJECT = "example";
-	public static final String CONTENTS = "test contents";
-	public static final String WRITER = "tester";
-	public static final String PASSWORD = SHA512.decryption("");
+public class BoardServiceTest extends BoardConstantForTest {
 
 	@InjectMocks
 	private BoardService boardService;
@@ -60,12 +55,11 @@ public class BoardServiceTest {
 	void saveBoard_Success() {
 		Board board = getBoard();
 		BoardDtoForSave boardDto = BoardDtoAssembler.toBoardSaveDto(board);
-
 		given(boardRepository.save(any(Board.class)))
 			.willReturn(board);
 
 		BoardDto savedBoardDto = boardService.saveBoard(boardDto);
-		log.info("savedBoardDto={}", savedBoardDto);
+
 		assertThat(savedBoardDto.getId()).isNotNull();
 		verify(boardRepository, times(1))
 			.save(any(Board.class));
@@ -75,7 +69,6 @@ public class BoardServiceTest {
 	@Test
 	void deleteBoard_Success() {
 		Board board = getBoard();
-
 		given(boardRepository.findById(anyLong()))
 			.willReturn(Optional.of(board));
 
@@ -98,19 +91,14 @@ public class BoardServiceTest {
 	@DisplayName("게시판 조회 서비스")
 	@Test
 	void BoardListTest() {
-		Pageable pageable = PageRequest.of(0, 10, Sort.by("id").descending());
-		BoardSearchCond boardSearchCond = new BoardSearchCond();
-		BoardDtoForPage board = new BoardDtoForPage(1L, SUBJECT, CONTENTS, WRITER, false, LocalDateTime.now(),
-			LocalDateTime.now());
-		List<BoardDtoForPage> boards = new ArrayList<>();
-		boards.add(board);
-		Page<BoardDtoForPage> pageBoard = new PageImpl<>(boards);
+		Page<BoardDtoForPage> pageBoard = getBoardsWithPage();
 		given(boardRepository.getBoardListWithPage(any(BoardSearchCond.class), any(Pageable.class))).willReturn(
 			pageBoard);
 
-		Page<BoardDtoForPage> result = boardService.getBoardListWithPage(boardSearchCond, pageable);
+		Pageable pageable = PageRequest.of(0, 10, Sort.by("id").descending());
+		Page<BoardDtoForPage> result = boardService.getBoardListWithPage(new BoardSearchCond(), pageable);
 
-		assertThat(result.getContent().get(0)).isEqualTo(boards.get(0));
+		assertThat(result.getContent().get(0)).isEqualTo(pageBoard.getContent().get(0));
 		verify(boardRepository, times(1))
 			.getBoardListWithPage(any(BoardSearchCond.class), any(Pageable.class));
 	}
@@ -119,21 +107,29 @@ public class BoardServiceTest {
 	@Test
 	void BoardUpdateTest() {
 		Board board = getBoard();
-		BoardDtoForUpdate boardDto = BoardDtoForUpdate.builder()
-			.subject(SUBJECT)
-			.contents(CONTENTS)
-			.writer(WRITER)
-			.build();
+		BoardDtoForUpdate boardDto = getBoardDtoForUpdate();
 
 		given(boardRepository.findById(anyLong()))
 			.willReturn(Optional.of(board));
 
 		BoardDto result = boardService.editBoard(1L, boardDto);
 
+		assertUpdateDto(boardDto, result);
+		verify(boardRepository, times(1)).findById(anyLong());
+	}
+
+	private void assertUpdateDto(BoardDtoForUpdate boardDto, BoardDto result) {
 		assertThat(result.getSubject()).isEqualTo(boardDto.getSubject());
 		assertThat(result.getContents()).isEqualTo(boardDto.getContents());
 		assertThat(result.getWriter()).isEqualTo(boardDto.getWriter());
-		verify(boardRepository, times(1)).findById(anyLong());
+	}
+
+	private BoardDtoForUpdate getBoardDtoForUpdate() {
+		return BoardDtoForUpdate.builder()
+			.subject(SUBJECT)
+			.contents(CONTENTS)
+			.writer(WRITER)
+			.build();
 	}
 
 	private Board getBoard() {
@@ -146,5 +142,13 @@ public class BoardServiceTest {
 			.password(PASSWORD)
 			.build();
 		return board;
+	}
+
+	private Page<BoardDtoForPage> getBoardsWithPage() {
+		BoardDtoForPage board = new BoardDtoForPage(1L, SUBJECT, CONTENTS, WRITER, false, LocalDateTime.now(),
+			LocalDateTime.now());
+		List<BoardDtoForPage> boards = new ArrayList<>();
+		boards.add(board);
+		return new PageImpl<>(boards);
 	}
 }

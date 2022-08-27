@@ -10,10 +10,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.study.board.domain.board.controller.BoardController;
 import com.study.board.domain.board.service.BoardService;
 import com.study.board.global.aop.logtrace.LogTraceAspect;
+import com.study.board.global.exception.GlobalExceptionHandler;
+import com.study.board.unit.domain.board.BoardConstantForTest;
 
 @WebMvcTest({BoardController.class})
 @ActiveProfiles("test")
-public class ControllerTest {
+public class ControllerTest extends BoardConstantForTest {
 
 	@Autowired
 	protected MockMvc mockMvc;
@@ -26,4 +28,5 @@ public class ControllerTest {
 
 	@MockBean
 	protected LogTraceAspect logTraceAspect;
+
 }

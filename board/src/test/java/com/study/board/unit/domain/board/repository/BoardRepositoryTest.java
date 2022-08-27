@@ -11,15 +11,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import com.study.board.domain.board.entity.Board;
 import com.study.board.domain.board.repository.BoardRepository;
-import com.study.board.global.util.SHA512;
+import com.study.board.unit.domain.board.BoardConstantForTest;
 
 @DataJpaTest
-public class BoardRepositoryTest {
+public class BoardRepositoryTest extends BoardConstantForTest {
 
-	public static final String SUBJECT = "example";
-	public static final String CONTENTS = "test contents";
-	public static final String WRITER = "tester";
-	public static final String PASSWORD = SHA512.decryption("");
 	@Autowired
 	private BoardRepository boardRepository;
 
