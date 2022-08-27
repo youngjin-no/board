@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.study.board.domain.board.model.BoardDto;
 import com.study.board.domain.board.entity.Board;
 import com.study.board.domain.board.model.BoardDtoAssembler;
-import com.study.board.domain.board.model.BoardSaveDto;
+import com.study.board.domain.board.model.BoardDtoForSave;
 import com.study.board.domain.board.service.BoardService;
 import com.study.board.global.util.SHA512;
 import com.study.board.global.exception.board.BoardException;
@@ -36,7 +36,7 @@ class IntegrationBoardServiceTest {
 	@DisplayName("게시판 저장 테스트")
 	public void saveTest() {
 		Board board = getBoard("tester");
-		BoardSaveDto dto = BoardDtoAssembler.toBoardSaveDto(board);
+		BoardDtoForSave dto = BoardDtoAssembler.toBoardSaveDto(board);
 		BoardDto savedDto = boardService.saveBoard(dto);
 
 		assertThat(dto.getSubject()).isEqualTo(savedDto.getSubject());

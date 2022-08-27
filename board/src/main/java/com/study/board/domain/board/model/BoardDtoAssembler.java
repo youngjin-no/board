@@ -16,11 +16,12 @@ public class BoardDtoAssembler {
 			.build();
 	}
 
-	public static BoardSaveDto toBoardSaveDto(Board board) {
-		return BoardSaveDto.builder()
+	public static BoardDtoForSave toBoardSaveDto(Board board) {
+		return BoardDtoForSave.builder()
 			.subject(board.getSubject())
 			.contents(board.getContents())
 			.writer(board.getWriter())
+			.password(board.getPassword())
 			.build();
 	}
 
@@ -33,11 +34,21 @@ public class BoardDtoAssembler {
 			.build();
 	}
 
-	public static Board boardFromSaveDto(BoardSaveDto boardSaveDto){
+	public static Board boardFromSaveDto(BoardDtoForSave boardSaveDto) {
 		return Board.builder()
 			.subject(boardSaveDto.getSubject())
 			.contents(boardSaveDto.getContents())
 			.writer(boardSaveDto.getWriter())
+			.password(boardSaveDto.getPassword())
 			.build();
 	}
+
+	public static BoardDto boardDtoFromUpdateDto(BoardDtoForUpdate boardDtoForUpdate) {
+		return BoardDto.builder()
+			.subject(boardDtoForUpdate.getSubject())
+			.contents(boardDtoForUpdate.getContents())
+			.writer(boardDtoForUpdate.getWriter())
+			.build();
+	}
+
 }

@@ -1,18 +1,28 @@
 package com.study.board.domain.board.controller;
 
-import com.study.board.domain.board.model.BoardDto;
-import com.study.board.domain.board.model.BoardDtoForPage;
-import com.study.board.domain.board.model.BoardSaveDto;
-import com.study.board.domain.board.model.BoardSearchCond;
-import com.study.board.domain.board.service.BoardService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import javax.validation.Valid;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import com.study.board.domain.board.model.BoardDto;
+import com.study.board.domain.board.model.BoardDtoForPage;
+import com.study.board.domain.board.model.BoardDtoForSave;
+import com.study.board.domain.board.model.BoardDtoForUpdate;
+import com.study.board.domain.board.model.BoardSearchCond;
+import com.study.board.domain.board.service.BoardService;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,7 +33,7 @@ public class BoardController {
 	private final BoardService boardService;
 
 	@PostMapping()
-	public ResponseEntity<BoardDto> saveBoard(@Valid @RequestBody BoardSaveDto boardSaveDto) {
+	public ResponseEntity<BoardDto> saveBoard(@Valid @RequestBody BoardDtoForSave boardSaveDto) {
 		return ResponseEntity.ok().body(boardService.saveBoard(boardSaveDto));
 	}
 
@@ -39,7 +49,7 @@ public class BoardController {
 	}
 
 	@PutMapping("/{boardId}")
-	public ResponseEntity<BoardDto> editBoard(@PathVariable Long boardId, @Valid BoardDto boardDto) {
+	public ResponseEntity<BoardDto> editBoard(@PathVariable Long boardId, @Valid BoardDtoForUpdate boardDto) {
 		return ResponseEntity.ok().body(boardService.editBoard(boardId, boardDto));
 	}
 

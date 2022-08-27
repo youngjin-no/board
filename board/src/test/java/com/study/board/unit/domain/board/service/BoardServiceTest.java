@@ -8,25 +8,39 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.study.board.domain.board.model.*;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import com.study.board.domain.board.entity.Board;
+import com.study.board.domain.board.model.BoardDto;
+import com.study.board.domain.board.model.BoardDtoAssembler;
+import com.study.board.domain.board.model.BoardDtoForPage;
+import com.study.board.domain.board.model.BoardDtoForSave;
+import com.study.board.domain.board.model.BoardDtoForUpdate;
+import com.study.board.domain.board.model.BoardSearchCond;
 import com.study.board.domain.board.repository.BoardRepository;
 import com.study.board.domain.board.service.BoardService;
-import com.study.board.global.util.SHA512;
 import com.study.board.global.exception.board.BoardException;
+import com.study.board.global.util.SHA512;
 
-import org.springframework.data.domain.*;
+import lombok.extern.slf4j.Slf4j;
 
 @ExtendWith(MockitoExtension.class)
+@Slf4j
 public class BoardServiceTest {
+
+	public static final String SUBJECT = "example";
+	public static final String CONTENTS = "test contents";
+	public static final String WRITER = "tester";
 
 	@InjectMocks
 	private BoardService boardService;
@@ -44,13 +58,13 @@ public class BoardServiceTest {
 	@Test
 	void saveBoard_Success() {
 		Board board = getBoard();
-		BoardSaveDto boardDto = BoardDtoAssembler.toBoardSaveDto(board);
+		BoardDtoForSave boardDto = BoardDtoAssembler.toBoardSaveDto(board);
 
 		given(boardRepository.save(any(Board.class)))
 			.willReturn(board);
 
 		BoardDto savedBoardDto = boardService.saveBoard(boardDto);
-
+		log.info("savedBoardDto={}", savedBoardDto);
 		assertThat(savedBoardDto.getId()).isNotNull();
 		verify(boardRepository, times(1))
 			.save(any(Board.class));
@@ -104,22 +118,29 @@ public class BoardServiceTest {
 	@Test
 	void BoardUpdateTest() {
 		Board board = getBoard();
-		BoardDto boardDto = BoardDtoAssembler.toBoardDto(board);
+		BoardDtoForUpdate boardDto = BoardDtoForUpdate.builder()
+			.subject(SUBJECT)
+			.contents(CONTENTS)
+			.writer(WRITER)
+			.build();
+
 		given(boardRepository.findById(anyLong()))
 			.willReturn(Optional.of(board));
 
 		BoardDto result = boardService.editBoard(1L, boardDto);
 
-		assertThat(result).isEqualTo(boardDto);
+		assertThat(result.getSubject()).isEqualTo(boardDto.getSubject());
+		assertThat(result.getContents()).isEqualTo(boardDto.getContents());
+		assertThat(result.getWriter()).isEqualTo(boardDto.getWriter());
 		verify(boardRepository, times(1)).findById(anyLong());
 	}
 
 	private Board getBoard() {
 		Board board = Board.builder()
 			.id(1L)
-			.subject("example")
-			.contents("test contents")
-			.writer("tester")
+			.subject(SUBJECT)
+			.contents(CONTENTS)
+			.writer(WRITER)
 			.isDelete(false)
 			.password(SHA512.decryption(""))
 			.build();

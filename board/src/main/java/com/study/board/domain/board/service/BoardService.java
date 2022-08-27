@@ -11,24 +11,29 @@ import com.study.board.domain.board.entity.Board;
 import com.study.board.domain.board.model.BoardDto;
 import com.study.board.domain.board.model.BoardDtoAssembler;
 import com.study.board.domain.board.model.BoardDtoForPage;
-import com.study.board.domain.board.model.BoardSaveDto;
+import com.study.board.domain.board.model.BoardDtoForSave;
+import com.study.board.domain.board.model.BoardDtoForUpdate;
 import com.study.board.domain.board.model.BoardSearchCond;
 import com.study.board.domain.board.repository.BoardRepository;
 import com.study.board.global.exception.ErrorCode;
 import com.study.board.global.exception.board.BoardException;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class BoardService {
 	private final BoardRepository boardRepository;
 
 	@Transactional
-	public BoardDto saveBoard(BoardSaveDto boardDto) {
-		Board saved = boardRepository.save(BoardDtoAssembler.boardFromSaveDto(boardDto));
-		return BoardDtoAssembler.toBoardDto(saved);
+	public BoardDto saveBoard(BoardDtoForSave boardDto) {
+		Board board = BoardDtoAssembler.boardFromSaveDto(boardDto);
+		board.encryptPassword();
+		Board save = boardRepository.save(board);
+		return BoardDtoAssembler.toBoardDto(save);
 	}
 
 	public BoardDto getBoardDetail(Long boardId) {
@@ -37,9 +42,10 @@ public class BoardService {
 	}
 
 	@Transactional
-	public BoardDto editBoard(Long boardId, BoardDto boardDto){
+	public BoardDto editBoard(Long boardId, BoardDtoForUpdate updateDto){
 		Board board = getBoard(boardId);
-		board.editBoard(boardDto);
+		board.editBoard(updateDto);
+		BoardDto boardDto = BoardDtoAssembler.toBoardDto(board);
 		return boardDto;
 	}
 	@Transactional
