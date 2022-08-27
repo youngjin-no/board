@@ -41,6 +41,7 @@ public class BoardServiceTest {
 	public static final String SUBJECT = "example";
 	public static final String CONTENTS = "test contents";
 	public static final String WRITER = "tester";
+	public static final String PASSWORD = SHA512.decryption("");
 
 	@InjectMocks
 	private BoardService boardService;
@@ -99,7 +100,7 @@ public class BoardServiceTest {
 	void BoardListTest() {
 		Pageable pageable = PageRequest.of(0, 10, Sort.by("id").descending());
 		BoardSearchCond boardSearchCond = new BoardSearchCond();
-		BoardDtoForPage board = new BoardDtoForPage(1L, "example", "test contens", "tester", false, LocalDateTime.now(),
+		BoardDtoForPage board = new BoardDtoForPage(1L, SUBJECT, CONTENTS, WRITER, false, LocalDateTime.now(),
 			LocalDateTime.now());
 		List<BoardDtoForPage> boards = new ArrayList<>();
 		boards.add(board);
@@ -142,7 +143,7 @@ public class BoardServiceTest {
 			.contents(CONTENTS)
 			.writer(WRITER)
 			.isDelete(false)
-			.password(SHA512.decryption(""))
+			.password(PASSWORD)
 			.build();
 		return board;
 	}

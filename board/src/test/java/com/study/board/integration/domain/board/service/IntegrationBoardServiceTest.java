@@ -27,6 +27,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 class IntegrationBoardServiceTest {
 
+	public static final String WRITER = "tester";
+	public static final String SUBJECT = "example";
+	public static final String CONTENTS = "test contents";
+	public static final String PASSWORD = SHA512.decryption("");
 	@Autowired
 	BoardService boardService;
 	@Autowired
@@ -35,7 +39,7 @@ class IntegrationBoardServiceTest {
 	@Test
 	@DisplayName("게시판 저장 테스트")
 	public void saveTest() {
-		Board board = getBoard("tester");
+		Board board = getBoard(WRITER);
 		BoardDtoForSave dto = BoardDtoAssembler.toBoardSaveDto(board);
 		BoardDto savedDto = boardService.saveBoard(dto);
 
@@ -47,7 +51,7 @@ class IntegrationBoardServiceTest {
 	@Test
 	@DisplayName("게시판 삭제 테스트")
 	public void deleteTest() {
-		Board board = getBoard("tester");
+		Board board = getBoard(WRITER);
 		em.persist(board);
 
 		boolean result = boardService.deleteBoard(board.getId());
@@ -79,11 +83,11 @@ class IntegrationBoardServiceTest {
 
 	private Board getBoard(String tester) {
 		Board board = Board.builder()
-			.subject("example")
-			.contents("test contents")
+			.subject(SUBJECT)
+			.contents(CONTENTS)
 			.writer(tester)
 			.isDelete(false)
-			.password(SHA512.decryption(""))
+			.password(PASSWORD)
 			.build();
 		return board;
 	}

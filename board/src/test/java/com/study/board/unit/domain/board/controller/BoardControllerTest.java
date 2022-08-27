@@ -16,20 +16,25 @@ import com.study.board.domain.board.model.BoardDto;
 import com.study.board.domain.board.model.BoardDtoAssembler;
 import com.study.board.domain.board.model.BoardDtoForSave;
 import com.study.board.domain.board.model.BoardDtoForUpdate;
+import com.study.board.global.util.SHA512;
 import com.study.board.unit.domain.ControllerTest;
 
 public class BoardControllerTest extends ControllerTest {
 
 	private static final String BASE_URL = "/api/boards";
+	private static final String SUBJECT = "test";
+	private static final String CONTENTS = "test contents";
+	private static final String WRITER = "tester";
+	private static final String PASSWORD = SHA512.decryption("");
 
 	@DisplayName("게시판 저장 서비스")
 	@Test
 	void saveBoardTest() throws Exception {
 		BoardDtoForSave saveDto = BoardDtoForSave.builder()
-			.subject("test")
-			.contents("test contents")
-			.writer("tester")
-			.password("1234")
+			.subject(SUBJECT)
+			.contents(CONTENTS)
+			.writer(WRITER)
+			.password(PASSWORD)
 			.build();
 
 		Board board = BoardDtoAssembler.boardFromSaveDto(saveDto);
@@ -53,10 +58,10 @@ public class BoardControllerTest extends ControllerTest {
 		Long boardId = 1L;
 		Board saveDto = Board.builder()
 			.id(boardId)
-			.subject("test")
-			.contents("test contents")
-			.writer("tester")
-			.password("1234")
+			.subject(SUBJECT)
+			.contents(CONTENTS)
+			.writer(WRITER)
+			.password(PASSWORD)
 			.build();
 		BoardDto boardDto = BoardDtoAssembler.toBoardDto(saveDto);
 
@@ -84,9 +89,9 @@ public class BoardControllerTest extends ControllerTest {
 	void updateBoardTest() throws Exception {
 		Long boardId = 1L;
 		BoardDtoForUpdate updateDto = BoardDtoForUpdate.builder()
-			.subject("test update")
-			.contents("test update contents")
-			.writer("tester")
+			.subject(SUBJECT)
+			.contents(CONTENTS)
+			.writer(WRITER)
 			.build();
 		BoardDto boardDto = BoardDtoAssembler.boardDtoFromUpdateDto(updateDto);
 

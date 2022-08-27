@@ -16,6 +16,10 @@ import com.study.board.global.util.SHA512;
 @DataJpaTest
 public class BoardRepositoryTest {
 
+	public static final String SUBJECT = "example";
+	public static final String CONTENTS = "test contents";
+	public static final String WRITER = "tester";
+	public static final String PASSWORD = SHA512.decryption("");
 	@Autowired
 	private BoardRepository boardRepository;
 
@@ -56,11 +60,11 @@ public class BoardRepositoryTest {
 
 	private Board getBoard() {
 		Board board = Board.builder()
-			.subject("example")
-			.contents("test contents")
-			.writer("tester")
+			.subject(SUBJECT)
+			.contents(CONTENTS)
+			.writer(WRITER)
 			.isDelete(false)
-			.password(SHA512.decryption(""))
+			.password(PASSWORD)
 			.build();
 		return board;
 	}
