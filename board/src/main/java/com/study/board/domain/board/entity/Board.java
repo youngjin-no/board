@@ -41,9 +41,9 @@ public class Board extends BaseTimeEntity {
 		if (StringUtils.hasText(boardDto.getSubject()))
 			subject = boardDto.getSubject();
 		if (StringUtils.hasText(boardDto.getContents()))
-			subject = boardDto.getContents();
+			contents = boardDto.getContents();
 		if (StringUtils.hasText(boardDto.getWriter()))
-			subject = boardDto.getWriter();
+			writer = boardDto.getWriter();
 	}
 
 	public void encryptPassword() {
