@@ -16,7 +16,6 @@ spring:
   message :
     basename : validation
     encoding : UTF-8
-
 logging.level:
   org.hibernate.SQL: debug
 #  org.hibernate.type: trace

@@ -107,28 +107,36 @@ public class BoardServiceTest extends BoardConstantForTest {
 	@Test
 	void BoardUpdateTest() {
 		Board board = getBoard();
-		BoardDtoForUpdate boardDto = getBoardDtoForUpdate();
+		BoardDtoForUpdate boardDto = getBoardDtoForUpdate(PASSWORD);
 
 		given(boardRepository.findById(anyLong()))
 			.willReturn(Optional.of(board));
 
-		BoardDto result = boardService.editBoard(1L, boardDto);
+		Long result = boardService.editBoard(1L, boardDto);
 
-		assertUpdateDto(boardDto, result);
+		assertThat(1L).isEqualTo(result);
 		verify(boardRepository, times(1)).findById(anyLong());
 	}
 
-	private void assertUpdateDto(BoardDtoForUpdate boardDto, BoardDto result) {
-		assertThat(result.getSubject()).isEqualTo(boardDto.getSubject());
-		assertThat(result.getContents()).isEqualTo(boardDto.getContents());
-		assertThat(result.getWriter()).isEqualTo(boardDto.getWriter());
+	@DisplayName("게시판 수정 실패 서비스")
+	@Test
+	void BoardUpdateExceptionTest() {
+		Board board = getBoard();
+		BoardDtoForUpdate boardDto = getBoardDtoForUpdate("");
+
+		given(boardRepository.findById(anyLong()))
+			.willReturn(Optional.of(board));
+
+		assertThatThrownBy(() -> boardService.editBoard(1L, boardDto)).isInstanceOf(BoardException.class);
+		verify(boardRepository, times(1)).findById(anyLong());
 	}
 
-	private BoardDtoForUpdate getBoardDtoForUpdate() {
+	private BoardDtoForUpdate getBoardDtoForUpdate(String password) {
 		return BoardDtoForUpdate.builder()
 			.subject(SUBJECT)
 			.contents(CONTENTS)
 			.writer(WRITER)
+			.password(password)
 			.build();
 	}
 

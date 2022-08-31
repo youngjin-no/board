@@ -49,6 +49,9 @@ public class Board extends BaseTimeEntity {
 	public void encryptPassword() {
 		password = SHA512.decryption(password);
 	}
+	public boolean isValidPassword(String password) {
+		return this.password.equals(password);
+	}
 	public void changePassword(String password) {
 		this.password = password;
 	}

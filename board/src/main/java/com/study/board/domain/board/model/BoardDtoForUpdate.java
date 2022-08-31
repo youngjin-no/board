@@ -14,4 +14,5 @@ public class BoardDtoForUpdate {
 	private String contents;
 	@Length(max = 20)
 	private String writer;
+	private String password;
 }

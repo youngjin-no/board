@@ -1,5 +1,7 @@
 package com.study.board.domain.board.controller;
 
+import java.net.URI;
+
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Page;
@@ -31,10 +33,13 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 
 	private final BoardService boardService;
+	private final String REDIRECT_URL = "/api/boards/%d";
 
 	@PostMapping()
 	public ResponseEntity<BoardDto> saveBoard(@Valid @RequestBody BoardDtoForSave boardSaveDto) {
-		return ResponseEntity.ok().body(boardService.saveBoard(boardSaveDto));
+		Long boardId = boardService.saveBoard(boardSaveDto).getId();
+		String redirectUrl = String.format(REDIRECT_URL, boardId);
+		return ResponseEntity.created(URI.create(redirectUrl)).build();
 	}
 
 	@GetMapping("/{boardId}")
@@ -50,7 +55,9 @@ public class BoardController {
 
 	@PutMapping("/{boardId}")
 	public ResponseEntity<BoardDto> editBoard(@PathVariable Long boardId, @Valid BoardDtoForUpdate boardDto) {
-		return ResponseEntity.ok().body(boardService.editBoard(boardId, boardDto));
+		boardService.editBoard(boardId, boardDto);
+		String redirectUrl = String.format(REDIRECT_URL, boardId);
+		return ResponseEntity.created(URI.create(redirectUrl)).build();
 	}
 
 	@DeleteMapping("/{boardId}")

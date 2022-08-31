@@ -5,12 +5,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.util.Random;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.ResultActions;
 
 import com.study.board.domain.board.controller.BoardController;
 import com.study.board.domain.board.entity.Board;
@@ -20,28 +17,24 @@ import com.study.board.domain.board.model.BoardDtoForSave;
 import com.study.board.domain.board.model.BoardDtoForUpdate;
 import com.study.board.global.exception.ErrorCode;
 import com.study.board.global.exception.board.BoardException;
-import com.study.board.global.util.SHA512;
 import com.study.board.unit.domain.ControllerTest;
 
 public class BoardControllerTest extends ControllerTest {
-
-	public static final String ENTITY_NOT_FOUND_MESSAGE = "데이터를 찾을 수 없습니다";
+	public static final String redirectURL = BASE_URL + "/" + BOARD_ID;
 
 	@DisplayName("게시판 저장 서비스")
 	@Test
 	void saveBoardTest() throws Exception {
 		BoardDtoForSave saveDto = getSaveDto();
-		Board board = BoardDtoAssembler.boardFromSaveDto(saveDto);
+		Board board = getBoard();
 		BoardDto boardDto = BoardDtoAssembler.toBoardDto(board);
 		given(boardService.saveBoard(any(BoardDtoForSave.class))).willReturn(boardDto);
 
 		mockMvc.perform(
 			post(BASE_URL).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(saveDto)))
-			.andDo(print()).andExpect(status().isOk())
+			.andDo(print()).andExpect(status().isCreated())
 			.andExpect(handler().handlerType(BoardController.class))
-			.andExpect(jsonPath("$.subject").value(boardDto.getSubject()))
-			.andExpect(jsonPath("$.contents").value(boardDto.getContents()))
-			.andExpect(jsonPath("$.writer").value(boardDto.getWriter()));
+			.andExpect(redirectedUrl(redirectURL));
 	}
 
 	@DisplayName("게시판 상세정보 서비스")
@@ -74,16 +67,14 @@ public class BoardControllerTest extends ControllerTest {
 		BoardDtoForUpdate updateDto = getUpdateDto();
 		BoardDto boardDto = BoardDtoAssembler.boardDtoFromUpdateDto(updateDto);
 		given(boardService.editBoard(anyLong(), any(BoardDtoForUpdate.class)))
-			.willReturn(boardDto);
+			.willReturn(1L);
 
 		mockMvc.perform(
-			put(BASE_URL + "/" + BOARD_ID).contentType(MediaType.APPLICATION_JSON)
+			put(redirectURL).contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(updateDto)))
-			.andDo(print()).andExpect(status().isOk())
+			.andDo(print()).andExpect(status().isCreated())
 			.andExpect(handler().handlerType(BoardController.class))
-			.andExpect(jsonPath("$.subject").value(boardDto.getSubject()))
-			.andExpect(jsonPath("$.contents").value(boardDto.getContents()))
-			.andExpect(jsonPath("$.writer").value(boardDto.getWriter()));
+			.andExpect(redirectedUrl(redirectURL));
 	}
 
 

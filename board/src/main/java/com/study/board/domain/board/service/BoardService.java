@@ -42,11 +42,14 @@ public class BoardService {
 	}
 
 	@Transactional
-	public BoardDto editBoard(Long boardId, BoardDtoForUpdate updateDto){
+	public Long editBoard(Long boardId, BoardDtoForUpdate updateDto){
 		Board board = getBoard(boardId);
+		if(!board.isValidPassword(updateDto.getPassword())){
+			throw new BoardException(ErrorCode.INVALID_PASSWORD);
+		}
 		board.editBoard(updateDto);
 		BoardDto boardDto = BoardDtoAssembler.toBoardDto(board);
-		return boardDto;
+		return boardDto.getId();
 	}
 
 	@Transactional
