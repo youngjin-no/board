@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <div th:replace="/fragments/header.html :: headerFragment"></div>
+</head>
+
+<script>
+  function fn_save(){
+    if(confirm('작성하신 글을 등록하시겠습니까?')){
+      document.frm.action = '/board/create';
+      document.frm.method = 'POST';
+      document.frm.submit();
+    }
+  }
+</script>
+
+<div class="mt-5 mb-5 ms-5">
+  <p class="fs-1">게시판 등록</p>
+</div>
+
+<form name="frm" class="container">
+  <div class="mb-3">
+    <label class="form-label">제목</label>
+    <input type="text" class="form-control" name="title">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">내용</label>
+    <textarea class="form-control" rows="3" name="content"></textarea>
+  </div>
+</form>
+
+<div class="mt-5 mb-5" style="text-align: center;">
+  <a href="javascript:fn_save();" class="btn btn-primary">등록</a>
+  <a href="/articles" class="btn btn-secondary">목록</a>
+</div>
+
+<footer>
+  <div th:replace="/fragments/footer.html :: footerFragment"></div>
+</footer>
+
+</body>
+</html>

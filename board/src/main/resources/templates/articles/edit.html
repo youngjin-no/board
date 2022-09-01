@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <div th:replace="/fragments/header.html :: headerFragment"></div>
+</head>
+
+<script>
+  function fn_save(){
+    document.frm.submit();
+  }
+</script>
+
+<div class="mt-5 mb-5 ms-5">
+  <p class="fs-1">게시판 수정</p>
+</div>
+
+<form id="frm" name="frm" class="container" action="/articles/update" method="post">
+  <input type="hidden" id="id" name="id" th:value="${board.id}">
+  <table class="table table-bordered" style="margin: 0 auto;">
+    <colgroup>
+      <col style="width:20%;">
+      <col style="width:auto;">
+      <col style="width:20%;">
+      <col style="width:auto;">
+    </colgroup>
+    <tr>
+      <th scope="col" style="text-align: center;">No</th>
+      <td colspan="3" th:text="${board.id}"></td>
+    </tr>
+    <tr>
+      <th scope="col" style="text-align: center;">제목</th>
+      <td colspan="3"><input name="subject" class="form-control" th:value="${board.subject}"></td>
+    </tr>
+    <tr>
+      <th scope="col" class="align-middle" style="text-align: center;">내용</th>
+      <td colspan="3"><textarea name="contents" class="form-control" th:text="${board.contents}" style="height: 500px;"></textarea></td>
+    </tr>
+    <tr>
+      <th scope="col" style="text-align: center;">등록자</th>
+      <td th:text="${board.writer}"></td>
+      <th scope="col" style="text-align: center;">삭제여부</th>
+      <td th:text="${board.delete}"></td>
+    </tr>
+    <tr>
+      <th scope="col" style="text-align: center;">등록일</th>
+      <td th:text="${board.createdDate}"></td>
+      <th scope="col" style="text-align: center;">수정일</th>
+      <td th:text="${board.lastModifiedDate}"></td>
+    </tr>
+  </table>
+
+  <div class="mt-5 mb-5" style="text-align: center;">
+    <a th:href="@{/articles/{id}(id = ${board.id})}" class="btn btn-danger">취소</a>
+    <a href="javascript:fn_save();" class="btn btn-primary">저장</a>
+    <a th:href="@{/articles}" class="btn btn-secondary">목록</a>
+  </div>
+</form>
+
+<footer>
+  <div th:replace="/fragments/footer.html :: footerFragment"></div>
+</footer>
+
+</body>
+</html>
