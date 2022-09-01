@@ -8,6 +8,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.study.domain.board.controller.BoardController;
+import com.study.domain.board.entity.Board;
+import com.study.domain.board.repository.BoardRepository;
 import com.study.domain.board.service.BoardService;
 import com.study.global.aop.logtrace.LogTraceAspect;
 import com.study.unit.domain.board.BoardConstantForTest;
@@ -24,6 +26,9 @@ public class ControllerTest extends BoardConstantForTest {
 
 	@MockBean
 	protected BoardService boardService;
+
+	@MockBean
+	protected Board boardMock;
 
 	@MockBean
 	protected LogTraceAspect logTraceAspect;

@@ -5,6 +5,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -31,7 +33,7 @@ public class BoardControllerTest extends ControllerTest {
 		given(boardService.saveBoard(any(BoardDtoForSave.class))).willReturn(boardDto);
 
 		mockMvc.perform(
-			post(BASE_URL).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(saveDto)))
+				post(BASE_URL).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(saveDto)))
 			.andDo(print()).andExpect(status().isCreated())
 			.andExpect(handler().handlerType(BoardController.class))
 			.andExpect(redirectedUrl(redirectURL));
@@ -45,7 +47,7 @@ public class BoardControllerTest extends ControllerTest {
 		given(boardService.getBoardDetail(anyLong())).willReturn(boardDto);
 
 		mockMvc.perform(
-			get(BASE_URL + "/" + BOARD_ID).contentType(MediaType.APPLICATION_JSON))
+				get(BASE_URL + "/" + BOARD_ID).contentType(MediaType.APPLICATION_JSON))
 			.andDo(print()).andExpect(status().isOk())
 			.andExpect(handler().handlerType(BoardController.class))
 			.andExpect(jsonPath("$.id").value(BOARD_ID))
@@ -53,7 +55,6 @@ public class BoardControllerTest extends ControllerTest {
 			.andExpect(jsonPath("$.contents").value(boardDto.getContents()))
 			.andExpect(jsonPath("$.writer").value(boardDto.getWriter()));
 	}
-
 
 	@DisplayName("게시판 리스트 페이징 서비스")
 	@Test
@@ -64,19 +65,34 @@ public class BoardControllerTest extends ControllerTest {
 	@DisplayName("게시판 수정 서비스")
 	@Test
 	void updateBoardTest() throws Exception {
-		BoardDtoForUpdate updateDto = getUpdateDto();
-		BoardDto boardDto = BoardDtoAssembler.boardDtoFromUpdateDto(updateDto);
+		BoardDtoForUpdate updateDto = getUpdateDto(PASSWORD);
+		Board board = getBoard();
 		given(boardService.editBoard(anyLong(), any(BoardDtoForUpdate.class)))
 			.willReturn(1L);
 
 		mockMvc.perform(
-			put(redirectURL).contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(updateDto)))
+				put(redirectURL).contentType(MediaType.APPLICATION_JSON)
+					.content(objectMapper.writeValueAsString(updateDto)))
 			.andDo(print()).andExpect(status().isCreated())
 			.andExpect(handler().handlerType(BoardController.class))
 			.andExpect(redirectedUrl(redirectURL));
 	}
 
+	@DisplayName("게시판 수정 서비스 - 비밀번호 틀렸을 경우 예외 발생")
+	@Test
+	void updateBoardExceptionTest() throws Exception {
+		BoardDtoForUpdate updateDto = getUpdateDto("");
+		Board board = getBoard();
+		given(boardService.editBoard(anyLong(), any(BoardDtoForUpdate.class)))
+			.willThrow(new BoardException(ErrorCode.INVALID_PASSWORD));
+
+		mockMvc.perform(
+				put(redirectURL).contentType(MediaType.APPLICATION_JSON)
+					.content(objectMapper.writeValueAsString(updateDto)))
+			.andDo(print()).andExpect(status().is4xxClientError())
+			.andExpect(handler().handlerType(BoardController.class))
+			.andExpect(jsonPath("$.message").value(ErrorCode.INVALID_PASSWORD.getMessage()));
+	}
 
 	@DisplayName("게시판 삭제 서비스")
 	@Test
@@ -84,8 +100,8 @@ public class BoardControllerTest extends ControllerTest {
 		given(boardService.deleteBoard(anyLong())).willReturn(true);
 
 		mockMvc.perform(
-			delete(BASE_URL + "/" + BOARD_ID).contentType(MediaType.APPLICATION_JSON)
-		)
+				delete(BASE_URL + "/" + BOARD_ID).contentType(MediaType.APPLICATION_JSON)
+			)
 			.andDo(print()).andExpect(status().isOk())
 			.andExpect(handler().handlerType(BoardController.class))
 			.andExpect(jsonPath("$").value(true));
@@ -97,12 +113,12 @@ public class BoardControllerTest extends ControllerTest {
 		given(boardService.deleteBoard(anyLong())).willThrow(new BoardException(ErrorCode.ENTITY_NOT_FOUND));
 
 		mockMvc.perform(
-				delete(BASE_URL + "/" + Math.random()).contentType(MediaType.APPLICATION_JSON)
+				delete(BASE_URL + "/" + 2L).contentType(MediaType.APPLICATION_JSON)
 			)
 			.andDo(print()).andExpect(status().is4xxClientError())
-			.andExpect(handler().handlerType(BoardController.class));
+			.andExpect(handler().handlerType(BoardController.class))
+			.andExpect(jsonPath("$.message").value(ErrorCode.ENTITY_NOT_FOUND.getMessage()));
 	}
-
 
 	private BoardDtoForSave getSaveDto() {
 		return BoardDtoForSave.builder()
@@ -113,11 +129,12 @@ public class BoardControllerTest extends ControllerTest {
 			.build();
 	}
 
-	private BoardDtoForUpdate getUpdateDto() {
+	private BoardDtoForUpdate getUpdateDto(String password) {
 		return BoardDtoForUpdate.builder()
 			.subject(SUBJECT)
 			.contents(CONTENTS)
 			.writer(WRITER)
+			.password(password)
 			.build();
 	}
 
