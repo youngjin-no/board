@@ -1,4 +1,4 @@
-package com.study.board.util;
+package com.study.util;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

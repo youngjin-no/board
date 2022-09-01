@@ -1,4 +1,4 @@
-package com.study.board.domain.board.controller;
+package com.study.domain.board.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 

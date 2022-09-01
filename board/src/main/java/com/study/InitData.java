@@ -1,7 +1,7 @@
-package com.study.board;
+package com.study;
 
-import com.study.board.domain.board.entity.Board;
-import com.study.board.util.SHA512;
+import com.study.domain.board.entity.Board;
+import com.study.util.SHA512;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;

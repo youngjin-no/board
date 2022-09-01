@@ -1,6 +1,4 @@
-package com.study.board.domain.board.entity;
-
-import java.util.UUID;
+package com.study.domain.board.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,9 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 
 @Entity
 @Getter
