@@ -9,11 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -22,6 +18,7 @@ import org.hibernate.annotations.Type;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@ToString
 @Builder
 public class Board extends BaseTimeEntity {
 	@Id
@@ -35,4 +32,9 @@ public class Board extends BaseTimeEntity {
 	@Column(name = "DELETE_YN", length = 1)
 	private boolean isDelete;
 	private String password;
+
+	public Board(Long id, String title, String content) {
+		super();
+	}
+
 }
