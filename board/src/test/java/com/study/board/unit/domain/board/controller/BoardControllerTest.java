@@ -9,14 +9,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 
-import com.study.board.domain.board.controller.BoardController;
-import com.study.board.domain.board.entity.Board;
-import com.study.board.domain.board.model.BoardDto;
-import com.study.board.domain.board.model.BoardDtoAssembler;
-import com.study.board.domain.board.model.BoardDtoForSave;
-import com.study.board.domain.board.model.BoardDtoForUpdate;
-import com.study.board.global.exception.ErrorCode;
-import com.study.board.global.exception.board.BoardException;
+import com.study.domain.board.controller.BoardController;
+import com.study.domain.board.entity.Board;
+import com.study.domain.board.model.BoardDto;
+import com.study.domain.board.model.BoardDtoAssembler;
+import com.study.domain.board.model.BoardDtoForSave;
+import com.study.domain.board.model.BoardDtoForUpdate;
+import com.study.global.exception.ErrorCode;
+import com.study.global.exception.board.BoardException;
 import com.study.board.unit.domain.ControllerTest;
 
 public class BoardControllerTest extends ControllerTest {

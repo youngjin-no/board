@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
-import com.study.board.domain.board.entity.Board;
-import com.study.board.domain.board.repository.BoardRepository;
+import com.study.domain.board.entity.Board;
+import com.study.domain.board.repository.BoardRepository;
 import com.study.board.unit.domain.board.BoardConstantForTest;
 
 @DataJpaTest

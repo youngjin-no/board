@@ -20,16 +20,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import com.study.board.domain.board.entity.Board;
-import com.study.board.domain.board.model.BoardDto;
-import com.study.board.domain.board.model.BoardDtoAssembler;
-import com.study.board.domain.board.model.BoardDtoForPage;
-import com.study.board.domain.board.model.BoardDtoForSave;
-import com.study.board.domain.board.model.BoardDtoForUpdate;
-import com.study.board.domain.board.model.BoardSearchCond;
-import com.study.board.domain.board.repository.BoardRepository;
-import com.study.board.domain.board.service.BoardService;
-import com.study.board.global.exception.board.BoardException;
+import com.study.domain.board.entity.Board;
+import com.study.domain.board.model.BoardDto;
+import com.study.domain.board.model.BoardDtoAssembler;
+import com.study.domain.board.model.BoardDtoForPage;
+import com.study.domain.board.model.BoardDtoForSave;
+import com.study.domain.board.model.BoardDtoForUpdate;
+import com.study.domain.board.model.BoardSearchCond;
+import com.study.domain.board.repository.BoardRepository;
+import com.study.domain.board.service.BoardService;
+import com.study.global.exception.board.BoardException;
 import com.study.board.unit.domain.board.BoardConstantForTest;
 
 import lombok.extern.slf4j.Slf4j;
