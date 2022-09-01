@@ -1,4 +1,4 @@
-package com.study.board.unit.domain.board.service;
+package com.study.unit.domain.board.service;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
@@ -30,7 +30,7 @@ import com.study.domain.board.model.BoardSearchCond;
 import com.study.domain.board.repository.BoardRepository;
 import com.study.domain.board.service.BoardService;
 import com.study.global.exception.board.BoardException;
-import com.study.board.unit.domain.board.BoardConstantForTest;
+import com.study.unit.domain.board.BoardConstantForTest;
 
 import lombok.extern.slf4j.Slf4j;
 

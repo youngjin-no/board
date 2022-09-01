@@ -1,4 +1,4 @@
-package com.study.board.unit.domain.board.controller;
+package com.study.unit.domain.board.controller;
 
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -17,7 +17,7 @@ import com.study.domain.board.model.BoardDtoForSave;
 import com.study.domain.board.model.BoardDtoForUpdate;
 import com.study.global.exception.ErrorCode;
 import com.study.global.exception.board.BoardException;
-import com.study.board.unit.domain.ControllerTest;
+import com.study.unit.domain.ControllerTest;
 
 public class BoardControllerTest extends ControllerTest {
 	public static final String redirectURL = BASE_URL + "/" + BOARD_ID;

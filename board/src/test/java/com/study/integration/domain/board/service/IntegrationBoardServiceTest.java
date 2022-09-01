@@ -1,4 +1,4 @@
-package com.study.board.integration.domain.board.service;
+package com.study.integration.domain.board.service;
 
 import static org.assertj.core.api.Assertions.*;
 

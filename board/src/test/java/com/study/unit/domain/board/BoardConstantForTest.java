@@ -1,4 +1,4 @@
-package com.study.board.unit.domain.board;
+package com.study.unit.domain.board;
 
 import com.study.global.util.SHA512;
 

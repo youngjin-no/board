@@ -1,4 +1,4 @@
-package com.study.board.unit.domain.board.repository;
+package com.study.unit.domain.board.repository;
 
 import java.util.NoSuchElementException;
 
@@ -11,7 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import com.study.domain.board.entity.Board;
 import com.study.domain.board.repository.BoardRepository;
-import com.study.board.unit.domain.board.BoardConstantForTest;
+import com.study.unit.domain.board.BoardConstantForTest;
 
 @DataJpaTest
 public class BoardRepositoryTest extends BoardConstantForTest {
