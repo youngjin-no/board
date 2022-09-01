@@ -1,6 +1,6 @@
 package com.study.board.unit.domain.board;
 
-import com.study.board.global.util.SHA512;
+import com.study.global.util.SHA512;
 
 public class BoardConstantForTest {
 

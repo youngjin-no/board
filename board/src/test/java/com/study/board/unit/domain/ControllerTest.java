@@ -7,10 +7,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.study.board.domain.board.controller.BoardController;
-import com.study.board.domain.board.service.BoardService;
-import com.study.board.global.aop.logtrace.LogTraceAspect;
-import com.study.board.global.exception.GlobalExceptionHandler;
+import com.study.domain.board.controller.BoardController;
+import com.study.domain.board.service.BoardService;
+import com.study.global.aop.logtrace.LogTraceAspect;
 import com.study.board.unit.domain.board.BoardConstantForTest;
 
 @WebMvcTest({BoardController.class})
