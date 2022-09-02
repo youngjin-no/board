@@ -1,4 +1,4 @@
-package com.study.domain.board.service;
+package com.study.board.service;
 
 import org.springframework.stereotype.Service;
 

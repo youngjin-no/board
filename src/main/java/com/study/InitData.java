@@ -1,6 +1,6 @@
 package com.study;
 
-import com.study.domain.board.entity.Board;
+import com.study.board.entity.Board;
 import com.study.util.SHA512;
 
 import javax.annotation.PostConstruct;
