@@ -5,7 +5,9 @@ import com.study.board.domain.board.entity.Board;
 import com.study.board.domain.board.repository.BoardRepository;
 import com.study.board.domain.board.service.BoardService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -89,6 +91,8 @@ public class BoardController {
         // 1. DTO -> Entity 변환
         Board board = form.toEntity();
         log.info(board.toString());
+
+        board.setWriter("홍의표");
 
         // 2. Repository에서 Entity를 DB안에 저장
         Board saved = boardRepository.save(board);

@@ -8,7 +8,7 @@
 <script>
   function fn_save(){
     if(confirm('작성하신 글을 등록하시겠습니까?')){
-      document.frm.action = '/board/create';
+      document.frm.action = '/articles/create';
       document.frm.method = 'POST';
       document.frm.submit();
     }
@@ -22,11 +22,11 @@
 <form name="frm" class="container">
   <div class="mb-3">
     <label class="form-label">제목</label>
-    <input type="text" class="form-control" name="title">
+    <input type="text" class="form-control" name="subject">
   </div>
   <div class="mb-3">
     <label class="form-label">내용</label>
-    <textarea class="form-control" rows="3" name="content"></textarea>
+    <textarea class="form-control" rows="3" name="contents"></textarea>
   </div>
 </form>
 
