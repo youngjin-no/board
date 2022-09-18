@@ -4,12 +4,29 @@
   <div th:replace="/fragments/header.html :: headerFragment"></div>
 </head>
 
+<script>
+  function goExcelDown() {
+    document.excelFrm.action = "/boardExcelDown";
+    document.excelFrm.method = "post"
+    document.excelFrm.submit();
+  }
+</script>
+
 <div class="mt-5 mb-5 ms-5">
-  <p class="fs-1">게시판 목록</p>
+  <p class="fs-1">커뮤니티 관리</p>
 </div>
 
-<table class="table table-bordered table-hover">
+<form name="excelFrm" id="excelFrm">
+</form>
+
+<div class="mb-1" style="text-align: right;">
+  <a href="javascript:goExcelDown();" class="btn btn-success">엑셀 다운로드</a>
+  <a href="/articles/new" class="btn btn-primary">등록</a>
+</div>
+
+<table class="table table-borderless table-hover">
   <colgroup>
+    <col style="width: 3%;">
     <col style="width: 15%;">
     <col style="width: auto;">
     <col style="width: 15%;">
@@ -17,8 +34,13 @@
     <col style="width: 15%;">
   </colgroup>
   <thead>
-  <tr>
-    <th scope="col" style="text-align: center;">No</th>
+  <tr style="background-color: cornflowerblue; color: white;">
+    <th scope="col" style="text-align: center;">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+      </div>
+    </th>
+    <th scope="col" style="text-align: center;">#</th>
     <th scope="col" style="text-align: center;">제목</th>
     <th scope="col" style="text-align: center;">등록자</th>
     <th scope="col" style="text-align: center;">등록일</th>
@@ -27,7 +49,12 @@
   </thead>
   <tbody>
     <tr th:each="list : ${articleList}">
-      <th th:text="${list.id}" style="text-align: center;"></th>
+      <td style="text-align: center;">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="">
+        </div>
+      </td>
+      <td th:text="${list.id}" style="text-align: center;"></td>
       <td><a th:href="@{/articles/{id}(id=${list.id})}" th:text="${list.subject}"></a></td>
       <td th:text="${list.writer}" style="text-align: center;"></td>
       <td th:text="${#temporals.format(list.createdDate, 'yyyy.MM.dd')}" style="text-align: center;"></td>
@@ -35,10 +62,6 @@
     </tr>
   </tbody>
 </table>
-
-<div style="text-align: right;">
-  <a href="/articles/new" class="btn btn-primary">등록</a>
-</div>
 
 <footer>
   <div th:replace="/fragments/footer.html :: footerFragment"></div>

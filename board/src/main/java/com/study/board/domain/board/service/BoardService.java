@@ -1,6 +1,6 @@
 package com.study.board.domain.board.service;
 
-import com.study.board.domain.board.dto.BoardForm;
+import com.study.board.domain.board.dto.BoardDto;
 import com.study.board.domain.board.entity.Board;
 import com.study.board.domain.board.repository.BoardRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ public class BoardService {
         return boardRepository.findAll();
     }
 
-    public Board create(BoardForm dto) {
+    public Board create(BoardDto dto) {
         Board board = dto.toEntity();
 
         if(board.getId() != null) {

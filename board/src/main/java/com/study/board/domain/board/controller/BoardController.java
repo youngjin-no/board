@@ -1,13 +1,12 @@
 package com.study.board.domain.board.controller;
 
-import com.study.board.domain.board.dto.BoardForm;
+import com.study.board.domain.board.com.ExcelCreate;
+import com.study.board.domain.board.dto.BoardDto;
 import com.study.board.domain.board.entity.Board;
 import com.study.board.domain.board.repository.BoardRepository;
 import com.study.board.domain.board.service.BoardService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -85,7 +85,7 @@ public class BoardController {
      * @return
      */
     @PostMapping("/articles/create")
-    public String createArticle(BoardForm form) {
+    public String createArticle(BoardDto form) {
         log.info(form.toString());
 
         // 1. DTO -> Entity 변환
@@ -130,7 +130,7 @@ public class BoardController {
      * @return
      */
     @PostMapping("articles/update")
-    public String update(BoardForm form, RedirectAttributes rttr) {
+    public String update(BoardDto form, RedirectAttributes rttr) {
         log.info(form.toString());
 
         //  DTO를 Entity로 변환
@@ -175,6 +175,34 @@ public class BoardController {
         }
 
         return "redirect:/articles";
+    }
+
+    /**
+     * 엑셀 다운로드 처리
+     *
+     */
+    @PostMapping("/boardExcelDown")
+    public void boardExcelDown(HttpServletResponse response) {
+
+        List<Board> boardList = boardRepository.findAll();
+
+        // 헤더 생성  (NO 자동생성 됨)
+        String[] excelheaderNmArr = {"#", "제목", "등록자", "등록일", "수정일"};
+        String[] excelEnNmArr = {"id", "subject", "writer", "created_date", "last_modified_date"};
+
+        // 특정 필드 style 설정  - title(제목), amt(금액)
+        String[] excelStyleArr = {"subject:title"};
+
+        try {
+            // 엑셀생성
+            ExcelCreate Excel = new ExcelCreate("커뮤니티 관리"); // sheet 명
+            Excel.InsertData(boardList, excelheaderNmArr, excelEnNmArr, excelStyleArr);
+            // width auto
+            Excel.setAutoCellWidth(excelheaderNmArr.length);
+            Excel.excelFileDownload(response, "커뮤니티 관리");	// 엑셀 파일명
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

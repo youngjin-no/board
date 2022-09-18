@@ -11,7 +11,7 @@
 </script>
 
 <div class="mt-5 mb-5 ms-5">
-  <p class="fs-1">게시판 수정</p>
+  <p class="fs-1">커뮤니티 관리</p>
 </div>
 
 <form id="frm" name="frm" class="container" action="/articles/update" method="post">
@@ -50,9 +50,9 @@
   </table>
 
   <div class="mt-5 mb-5" style="text-align: center;">
+    <a th:href="@{/articles}" class="btn btn-secondary">목록</a>
     <a th:href="@{/articles/{id}(id = ${board.id})}" class="btn btn-danger">취소</a>
     <a href="javascript:fn_save();" class="btn btn-primary">저장</a>
-    <a th:href="@{/articles}" class="btn btn-secondary">목록</a>
   </div>
 </form>
 

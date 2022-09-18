@@ -5,7 +5,7 @@
 </head>
 
 <div class="mt-5 mb-5 ms-5">
-    <p class="fs-1">게시판 상세</p>
+    <p class="fs-1">커뮤니티 관리</p>
 </div>
 
 <table class="table table-bordered" style="margin: 0 auto;">
@@ -42,9 +42,9 @@
 </table>
 
 <div class="mt-5 mb-5" style="text-align: center;">
-    <a th:href="@{/articles/{id}/edit(id = ${board.id})}" class="btn btn-primary">수정</a>
-    <a th:href="@{/articles/{id}/delete(id = ${board.id})}" class="btn btn-danger">삭제</a>
     <a th:href="@{/articles}" class="btn btn-secondary">목록</a>
+    <a th:href="@{/articles/{id}/delete(id = ${board.id})}" class="btn btn-danger">삭제</a>
+    <a th:href="@{/articles/{id}/edit(id = ${board.id})}" class="btn btn-primary">수정</a>
 </div>
 
 <footer>
