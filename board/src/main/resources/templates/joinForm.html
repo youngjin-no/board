@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="/fragments/header.html :: headerFragment"></div>
+</head>
+
+<style>
+    header {
+        display: none;
+    }
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    .background { postion: relative;}
+    .login-form {
+        width: 480px;
+        height: 650px;
+        background-color: white;
+        border-radius: 15px;
+        position: absolute;
+        top: 55%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        opacity:0.7;
+    }
+    login-form:hover {
+        opacity: 1.0;
+    }
+    video { width: 100%;}
+    .col-12 {
+        text-align: center;
+    }
+    .subject {
+        margin-top: 20px;
+        color: cornflowerblue;
+    }
+    .col-12 > input {
+        margin: 0 auto;
+        width: 90%;
+    }
+    .col-12 > button {
+        width: 90%;
+        height: 50px;
+    }
+    .low-p {
+        margin-top: 10px;
+    }
+</style>
+
+<script>
+    function goLogin() {
+        if(!confirm("회원가입을 하시겠습니까?")){
+            return;
+        }
+
+        if ($("#id").val() == "") {
+            alert("아이디를 입력해주세요.");
+            return;
+        } else if ($("#pw").val() == "") {
+            alert("비밀번호를 입력해주세요.");
+            return;
+        } else if ($("#name").val() == "") {
+            alert("이름을 입력해주세요.");
+            return;
+        } else if ($("#email").val() == "") {
+            alert("이메일을 입력해주세요.");
+            return;
+        } else if ($("#phone").val() == "") {
+            alert("핸드폰 번호를 입력해주세요.");
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url:"/join",
+            data: $("#joinForm").serialize(),
+            dataType:"json",
+            success : function(result){
+                alert("회원가입을 성공적으로 완료하였습니다. 로그인 페이지에서 로그인해주세요.");
+                location.href = "/login";
+            },
+            error : function(result){
+                alert("회원가입을 실패하였습니다. 다시 회원가입을 시도해주세요.");
+                location.href = "/join";
+            }
+        });
+
+    }
+</script>
+<body>
+
+<div class="background">
+    <video muted autoplay loop>
+        <source src="video/shopping.mp4" type="video/mp4">
+    </video>
+    <div class="login-form">
+        <div class="container">
+            <form name="joinForm" id="joinForm">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <p class="subject fs-1 fw-bold"><i class="bi bi-house-fill"></i>집들이</p>
+                    </div>
+                    <div class="col-12 fw-bold">
+                        <input type="text" name="id" class="form-control" id="id" placeholder="아이디를 입력하세요." aria-label="Last name">
+                    </div>
+                    <div class="col-12 fw-bold">
+                        <input type="text" name="pw" class="form-control" id="pw" placeholder="비밀번호를 입력하세요." aria-label="Last name">
+                    </div>
+                    <div class="col-12 fw-bold">
+                        <input type="text" name="name" class="form-control" id="name" placeholder="이름을 입력하세요." aria-label="Last name">
+                    </div>
+                    <div class="col-12 fw-bold">
+                        <input type="text" name="email" class="form-control" id="email" placeholder="이메일 주소를 입력하세요." aria-label="Last name">
+                    </div>
+                    <div class="col-12 fw-bold">
+                        <input type="text" name="phone" class="form-control" id="phone" placeholder="핸드폰 번호를 입력하세요." aria-label="Last name">
+                    </div>
+                    <div class="col-12 fw-bold">
+                        <a href="javascript:goLogin();" class="btn btn-primary">회원가입</a>
+                    </div>
+                    <div class="col-12">
+                        <p class="low-p"><a href="/login">비밀번호 찾기</a> | <a href="/login">아이디 찾기</a> | <a href="/login">로그인</a></p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<footer>
+    <div th:replace="/fragments/footer.html :: footerFragment"></div>
+</footer>
+
+</html>

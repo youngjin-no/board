@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="/fragments/header.html :: headerFragment"></div>
+</head>
+
+<style>
+    header {
+        display: none;
+    }
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    .background { position: relative;}
+    .login-form {
+        width: 480px;
+        height: 650px;
+        background-color: white;
+        border-radius: 15px;
+        position: absolute;
+        top: 55%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        opacity:0.7;
+    }
+    .login-form:hover {
+        opacity: 1.0;
+    }
+    video { width: 100%;}
+    .col-12 {
+        text-align: center;
+    }
+    .subject {
+        margin-top: 20px;
+        color: cornflowerblue;
+    }
+    .form-control {
+        margin: 0 auto;
+        width: 90%;
+        height: 50px;
+    }
+    .btn {
+        width: 90%;
+        height: 50px;
+    }
+    .low-p {
+        margin-top: 10px;
+    }
+</style>
+
+<script>
+    function goLogin() {
+        if (!confirm("로그인 하시겠습니까?")) {
+            return;
+        }
+
+        if ($("#id").val() == "") {
+            alert("아이디를 입력해주세요.");
+        } else if ($("#pw").val() == "") {
+            alert("비밀번호를 입력해주세요.");
+        }
+
+        $.ajax({
+            url : "/login",
+            method : "post",
+            data : $("#loginForm").serialize(),
+            dataType : "json",
+            success : function (result) {
+                location.href = "/articles";
+            },
+            error : function (result) {
+                alert("로그인에 실패하였습니다. 다시 로그인해주세요.");
+                location.href = "/login";
+            }
+        });
+    }
+
+</script>
+
+<body>
+
+    <div class="background">
+        <video muted autoplay loop>
+            <source src="video/shopping.mp4" type="video/mp4">
+        </video>
+        <div class="login-form">
+            <div class="container">
+            <form name="loginForm" id="loginForm">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <p class="subject fs-1 fw-bold"><i class="bi bi-house-fill"></i>집들이</p>
+                    </div>
+                    <div class="col-12 fw-bold">
+                        <input type="text" name="id" class="form-control" id="id" placeholder="아이디를 입력하세요." aria-label="Last name">
+                    </div>
+                    <div class="col-12 fw-bold">
+                        <input type="text" name="pw" class="form-control" id="pw" placeholder="비밀번호를 입력하세요." aria-label="Last name">
+                    </div>
+                    <div class="col-12">
+                        <input type="checkbox" id="remember-id">
+                        <label for="remember-id">아이디 기억하기</label>
+                    </div>
+                    <div class="col-12">
+                        <a href="javascript:goLogin();" class="btn btn-primary fw-bold">로그인</a>
+                    </div>
+                    <div class="col-12">
+                        <a href="javascript:goKakaoLogin();" class="btn btn-warning fw-bold">카카오 로그인</a>
+                    </div>
+                    <div class="col-12">
+                        <a href="javascript:goNaverLogin();" class="btn btn-success fw-bold">네이버 로그인</a>
+                    </div>
+                    <div class="col-12">
+                        <a href="javascript:goGoogleLogin();" class="btn btn-secondary fw-bold">구글 로그인</a>
+                    </div>
+                    <div class="col-12">
+                        <p class="low-p"><a href="/login">비밀번호 찾기</a> | <a href="/login">아이디 찾기</a> | <a href="/join">회원가입</a></p>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<footer>
+    <div th:replace="/fragments/footer.html :: footerFragment"></div>
+</footer>
+
+</html>
